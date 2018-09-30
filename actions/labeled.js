@@ -22,13 +22,17 @@ module.exports = async (payload) => {
 
   const { description } = label.node
 
-  switch(description) {
-    case 'project':
+  if (description.length < 6) {
+      return
+  }
+
+  if (description.substring(0, 7).toLowerCase() === "project") {
       await addProjectCard({ label, project, issue, variables })
-      break
-    case 'status':
+      return
+  }
+
+  if (description.substring(0, 6).toLowerCase() === "status") {
       await moveProjectCard({ label, issue, variables })
-      break
-    default:
+      return
   }
 }
